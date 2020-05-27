@@ -25,5 +25,10 @@
     text-decoration: none;
     color:honeydew;
     padding-left: 10px;
-    padding-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#sidebar a:hover {
+    background-color: gray;
 }
