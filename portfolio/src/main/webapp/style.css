@@ -9,26 +9,26 @@
 }
 
 #sidebar {
-    height: 100%;
-    width: 200px;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    padding-top: 20px;
-    background-color:black;
+  background-color:black;
+  height: 100%;
+  left: 0;
+  padding-top: 20px;
+  position: fixed;
+  top: 0;
+  width: 200px;
+  z-index: 1;
 }
 
 #sidebar a {
-    display: block;
-    font-size: 20px;
-    text-decoration: none;
-    color:honeydew;
-    padding-left: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+  color:honeydew;
+  display: block;
+  font-size: 20px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-top: 5px;
+  text-decoration: none;
 }
 
 #sidebar a:hover {
-    background-color: gray;
+  background-color: gray;
 }
