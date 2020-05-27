@@ -7,3 +7,23 @@
 #greeting-container {
   margin-top: 20px;
 }
+
+#sidebar {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    padding-top: 20px;
+    background-color:black;
+}
+
+#sidebar a {
+    display: block;
+    font-size: 20px;
+    text-decoration: none;
+    color:honeydew;
+    padding-left: 10px;
+    padding-bottom: 10px;
+}
