@@ -4,18 +4,18 @@ body {
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 img {
-    vertical-align: middle;
-    width: inherit;
+  vertical-align: middle;
+  width: inherit;
 }
 
 .slideshow {
   margin: auto;
-  width: 750px;
   position: relative;
+  width: 750px;
 }
 
 .EuropeSlideshow {
@@ -24,6 +24,7 @@ img {
 
 
 .left-button, .right-button {
+  background-color: black;
   border-radius: 0 3px 3px 0;
   color: honeydew;
   cursor: grab;
@@ -36,7 +37,6 @@ img {
   transition: 1s ease;
   user-select: none;
   width: auto;
-  background-color: black;
 }
 
 .right-button {
@@ -45,12 +45,12 @@ img {
 }
 
 .picCaption {
+  background-color: rgba(122, 109, 109, 0.75);
+  bottom: 0;
   color: white;
   font-size: 20px;
-  width: 100%;
-  text-align: center;
-  bottom: 0;
   position: absolute;
-  background-color: rgba(122, 109, 109, 0.75);
+  text-align: center;
+  width: 100%;
 }
 
