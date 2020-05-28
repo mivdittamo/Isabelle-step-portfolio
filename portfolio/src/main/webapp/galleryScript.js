@@ -8,7 +8,6 @@ function moveSlide(n) {
 
 function displaySlide(n) {
     var slides = document.getElementsByClassName("EuropeSlideshow");
-    console.log(slides);
     if (n > slides.length) {
         slideIndex = 1;
     } else if (n < 1) {

@@ -9,11 +9,12 @@ body {
 
 img {
     vertical-align: middle;
+    width: inherit;
 }
 
 .slideshow {
   margin: auto;
-  max-width: 1000px;
+  width: 750px;
   position: relative;
 }
 
@@ -21,19 +22,21 @@ img {
   display: none;
 }
 
+
 .left-button, .right-button {
   border-radius: 0 3px 3px 0;
   color: honeydew;
   cursor: grab;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
   margin-top: -22px;
-  padding: 16px;
+  padding: 15px;
   position: absolute;
   top: 50%;
   transition: 1s ease;
   user-select: none;
   width: auto;
+  background-color: black;
 }
 
 .right-button {
@@ -41,21 +44,13 @@ img {
   right: 0;
 }
 
-/*
 .picCaption {
   color: white;
-  font-size: 10px;
+  font-size: 20px;
   width: 100%;
   text-align: center;
-  bottom: 10px;
+  bottom: 0;
   position: absolute;
+  background-color: rgba(122, 109, 109, 0.75);
 }
 
-.numOrder {
-  color: black;
-  font-size: 15px;
-  padding: 10px 10px;
-  position: absolute;
-  top: 0;
-}
-*/
