@@ -38,3 +38,7 @@ body {
 #sidebar a:hover {
   background-color: gray;
 }
+
+h1 {
+  text-decoration: underline;
+}
