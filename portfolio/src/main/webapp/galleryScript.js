@@ -1,18 +1,26 @@
 // Functions for the slideshows in Gallery
-var slideIndex = 1;
-displaySlide(slideIndex);
 
-function moveSlide(n) {
-  displaySlide(slideIndex += n);
+//Initial index for diplaying slides
+var slideIndex = 1;
+
+//all of the slides in the europeSlideshow
+var slides = document.getElementsByClassName("EuropeSlideshow");
+
+//initially display the first slide
+displaySlide();
+
+//Moves the slideIndex by the indicated factor
+function moveSlide(moveFactor) {
+  slideIndex += moveFactor;
+  if (slideIndex > slides.length) {
+    slideIndex = 1;
+  } else if (slideIndex < 1) {
+    slideIndex = slides.length;
+  }
 }
 
-function displaySlide(n) {
-  var slides = document.getElementsByClassName("EuropeSlideshow");
-  if (n > slides.length) {
-    slideIndex = 1;
-  } else if (n < 1) {
-    slideIndex = slideIndex = slides.length;
-  }
+//Displays the slide at the current slideIndex
+function displaySlide() {
   for (var i = 0; i < slides.length; i++) {
     slides[i].style.display = "none";
   }
