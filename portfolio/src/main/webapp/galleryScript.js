@@ -4,7 +4,7 @@
 var slideIndex = 1;
 
 //all of the slides in the europeSlideshow
-var slides = document.getElementsByClassName("EuropeSlideshow");
+var slides = document.getElementsByClassName("europeSlideshow");
 
 //initially display the first slide
 displaySlide();

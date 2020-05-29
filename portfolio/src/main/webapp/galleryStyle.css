@@ -3,10 +3,6 @@ body {
   margin: 0;
 }
 
-* {
-  box-sizing: border-box;
-}
-
 img {
   vertical-align: middle;
   width: inherit;
@@ -18,10 +14,9 @@ img {
   width: 750px;
 }
 
-.EuropeSlideshow {
+.europeSlideshow {
   display: none;
 }
-
 
 .left-button, .right-button {
   background-color: black;
