@@ -29,7 +29,7 @@ img {
   padding: 15px;
   position: absolute;
   top: 50%;
-  transition: 1s ease;
+  transition: 0.5s ease;
   user-select: none;
   width: auto;
 }
@@ -37,6 +37,10 @@ img {
 .right-button {
   border-radius: 3px 0 0 3px;
   right: 0;
+}
+
+.left-button:hover, .right-button:hover {
+  background-color: gray;
 }
 
 .picCaption {
