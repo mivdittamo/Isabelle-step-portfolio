@@ -26,3 +26,19 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
+//Functions for Fetch Walkthrough
+function getIntroduction() {
+  const responsePromise = fetch('/data');
+  responsePromise.then(handleResponse);
+}
+
+function handleResponse(response) {
+  const textPromise = response.text();
+  textPromise.then(addToDOM);
+}
+
+function addToDOM(textResponse) {
+  const textContainer = document.getElementById('introduction-container');
+  textContainer.innerText = textResponse;
+}
