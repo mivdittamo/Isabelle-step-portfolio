@@ -46,12 +46,12 @@ function addToDOM(textResponse) {
 //Functions for JSON walkthrough
 function getMessages() {
   fetch('/data').then(response => response.json()).then((messages) => {
-      const messagesContainer = document.getElementById('messages-container');
-      messagesContainer.innerHTML = 'Messages:';
-      for (i = 0; i < messages.length; i++) {
-        messagesContainer.appendChild(createPElement(messages[i]));
-      }
-    });
+    const messagesContainer = document.getElementById('messages-container');
+    messagesContainer.innerHTML = 'Messages:';
+    for (i = 0; i < messages.length; i++) {
+      messagesContainer.appendChild(createPElement(messages[i]));
+    }
+  });
 }
 
 function createPElement(text) {
