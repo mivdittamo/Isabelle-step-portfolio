@@ -27,7 +27,6 @@ function addRandomGreeting() {
   greetingContainer.innerText = greeting;
 }
 
-//Functions for Fetch Walkthrough
 function getIntroduction() {
   const responsePromise = fetch('/data');
   responsePromise.then(handleResponse);
@@ -43,7 +42,6 @@ function addToDOM(textResponse) {
   textContainer.innerText = textResponse;
 }
 
-//Functions for JSON walkthrough
 function getMessages() {
   fetch('/data').then(response => response.json()).then((messages) => {
     const messagesContainer = document.getElementById('messages-container');
