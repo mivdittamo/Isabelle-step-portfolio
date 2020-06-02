@@ -42,12 +42,12 @@ function addToDOM(textResponse) {
   textContainer.innerText = textResponse;
 }
 
-function getMessages() {
-  fetch('/data').then(response => response.json()).then((messages) => {
-    const messagesContainer = document.getElementById('messages-container');
-    messagesContainer.innerHTML = 'Messages:';
-    for (i = 0; i < messages.length; i++) {
-      messagesContainer.appendChild(createPElement(messages[i]));
+function getComments() {
+  fetch('/data').then(response => response.json()).then((comments) => {
+    const commentsContainer = document.getElementById('comments-container');
+    commentsContainer.innerHTML = '<h3>Comments:</h3>';
+    for (i = 0; i < comments.length; i++) {
+      commentsContainer.appendChild(createPElement(comments[i]));
     }
   });
 }
