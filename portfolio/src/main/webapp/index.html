@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="getComments()">
     <div id="content">
       <h1>Isabelle's Portfolio</h1>
       <p>
@@ -22,8 +22,13 @@
       <p>Click here to get a random message:</p>
       <button onclick="addRandomGreeting()">Hello</button>
       <div id="greeting-container"></div>
-      <button onclick="getMessages()">Welcome!</button>
-      <div id="messages-container"></div>
+      <div id="comments-container"></div>
+      <form action="/data" method="POST">
+        <h3>Add Your Comments:</h3>
+        <textarea name="comments-input"></textarea>
+        <br></br>
+        <input type="submit" />
+      </form>
     </div>
     <div id="sidebar">
       <a href="index.html">Home</a>
