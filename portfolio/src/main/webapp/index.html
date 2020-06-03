@@ -22,13 +22,20 @@
       <p>Click here to get a random message:</p>
       <button onclick="addRandomGreeting()">Hello</button>
       <div id="greeting-container"></div>
-      <h3>Comments:</h3>
-      <div id="comments-container"></div>
       <form action="/data" method="POST">
         <h3>Add Your Comments:</h3>
         <p><textarea name="comments-input"></textarea></p>
         <p><input type="submit" /></p>
       </form>
+      <form action="/data" method="GET">
+        <h3>Comments:</h3>
+        <div id=num-comments>
+          <label>Max Number of Comments:</label>
+          <input type="number" name="max-comments" min="1">
+          <input type="submit" />
+        </div>
+      </form>
+      <div id="comments-container"></div>
     </div>
     <div id="sidebar">
       <a href="index.html">Home</a>

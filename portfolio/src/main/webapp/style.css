@@ -55,3 +55,7 @@ h1 {
   padding-left: 10px;  
   text-align: left;
 }
+
+#num-comments {
+    align-content: end;
+}

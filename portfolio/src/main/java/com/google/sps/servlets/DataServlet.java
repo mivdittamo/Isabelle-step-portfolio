@@ -28,6 +28,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.FetchOptions;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
@@ -40,15 +41,16 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Query query = new Query(COMMENT);
+    int maxComments = getNumComments(request);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    PreparedQuery results = datastore.prepare(query);
+    List<Entity> results = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(maxComments)); 
     
     List<String> comments = new ArrayList<>();
-    for (Entity entity: results.asIterable()) {
-        String comment = (String) entity.getProperty(CONTENT);
-        comments.add(comment);
+    for (Entity entity: results) {
+      String comment = (String) entity.getProperty(CONTENT);
+      comments.add(comment);
     }
-    
+
     response.setContentType("application/json;");
     Gson gson = new Gson();
     String json = gson.toJson(comments);
@@ -68,6 +70,26 @@ public class DataServlet extends HttpServlet {
     datastore.put(commentEntity);
 
     response.sendRedirect("/index.html");
+  }
+
+  private int getNumComments(HttpServletRequest request) {
+    String maxCommentsString = request.getParameter("max-comments");
+
+    int numMaxComments;
+    try {
+      numMaxComments = Integer.parseInt(maxCommentsString);
+    } catch (NumberFormatException e) {
+      System.err.println("Could not convert to int: " + maxCommentsString);
+      return -1;
+    }
+
+    if (numMaxComments < 1) {
+      System.err.println("Player choice is out of range: " + maxCommentsString);
+      return -1;
+    }
+
+    System.out.println("Calculate max success:" + numMaxComments);
+    return numMaxComments;
   }
 }
 

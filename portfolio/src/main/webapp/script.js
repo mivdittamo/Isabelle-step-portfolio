@@ -43,7 +43,7 @@ function addToDOM(textResponse) {
 }
 
 function getComments() {
-  fetch('/data').then(response => response.json()).then((comments) => {
+  fetch('/data?max-comments=6').then(response => response.json()).then((comments) => {
     const commentsContainer = document.getElementById('comments-container');
     commentsContainer.innerHTML = '';
     console.log(comments);
