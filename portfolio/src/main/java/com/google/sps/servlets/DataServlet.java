@@ -41,7 +41,7 @@ public class DataServlet extends HttpServlet {
     
     List<String> comments = new ArrayList<>();
     for (Entity entity: results.asIterable()) {
-        String comment = (String) entity.getProperty("commentContent");
+        String comment = (String) entity.getProperty("content");
         comments.add(comment);
     }
     
@@ -55,7 +55,7 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String comment = request.getParameter("comments-input");
     Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty("commentContent", comment);
+    commentEntity.setProperty("content", comment);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
