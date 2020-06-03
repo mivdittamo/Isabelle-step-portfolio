@@ -42,3 +42,16 @@ body {
 h1 {
   text-decoration: underline;
 }
+
+#comments-container {
+  border: solid 1px rgb(0, 0, 0);
+}
+
+#comments-container p{
+  border: solid 1px rgb(0, 0, 0);
+  margin: 0;
+  padding-block-end: 10px;
+  padding-block-start: 10px;
+  padding-left: 10px;  
+  text-align: left;
+}
