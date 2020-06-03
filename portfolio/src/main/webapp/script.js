@@ -45,9 +45,17 @@ function addToDOM(textResponse) {
 function getComments() {
   fetch('/data').then(response => response.json()).then((comments) => {
     const commentsContainer = document.getElementById('comments-container');
-    commentsContainer.innerHTML = '<h3>Comments:</h3>';
-    for (i = 0; i < comments.length; i++) {
-      commentsContainer.appendChild(createPElement(comments[i]));
+    commentsContainer.innerHTML = '';
+    console.log(comments);
+    console.log(comments.length);
+    if (comments.length == 0) {
+      const iElement = document.createElement('i');
+      iElement.innerText = "No comments to display";
+      commentsContainer.appendChild(iElement);
+    } else {
+      for (i = 0; i < comments.length; i++) {
+        commentsContainer.appendChild(createPElement(comments[i]));
+      }
     }
   });
 }
