@@ -48,8 +48,6 @@ function getComments() {
   fetch('/data?max-comments='+numComments).then(response => response.json()).then((comments) => {
     const commentsContainer = document.getElementById('comments-container');
     commentsContainer.innerHTML = '';
-    console.log(comments);
-    console.log(comments.length);
     if (comments.length == 0) {
       const iElement = document.createElement('i');
       iElement.innerText = "No comments to display";

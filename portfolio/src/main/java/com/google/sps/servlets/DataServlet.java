@@ -76,7 +76,6 @@ public class DataServlet extends HttpServlet {
 
   private int getNumComments(HttpServletRequest request) {
     String maxCommentsString = request.getParameter("max-comments");
-
     int numMaxComments;
     try {
       numMaxComments = Integer.parseInt(maxCommentsString);
@@ -84,13 +83,10 @@ public class DataServlet extends HttpServlet {
       System.err.println("Could not convert to int: " + maxCommentsString);
       return -1;
     }
-
     if (numMaxComments < 1) {
       System.err.println("Player choice is out of range: " + maxCommentsString);
       return -1;
     }
-
-    System.out.println("Calculate max success:" + numMaxComments);
     return numMaxComments;
   }
 }
