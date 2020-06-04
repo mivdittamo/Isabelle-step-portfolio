@@ -40,8 +40,10 @@ public class DataServlet extends HttpServlet {
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query(ENTITY_COMMENT);
+    
     int maxComments = getNumComments(request);
+
+    Query query = new Query(ENTITY_COMMENT);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     List<Entity> results = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(maxComments)); 
     
