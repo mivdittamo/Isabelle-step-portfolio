@@ -28,6 +28,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.FetchOptions;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
@@ -39,16 +40,21 @@ public class DataServlet extends HttpServlet {
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    Integer maxComments = getMaxComments(request);
+    if (maxComments == null) {
+        maxComments = 0;
+    }
+
     Query query = new Query(ENTITY_COMMENT);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    PreparedQuery results = datastore.prepare(query);
+    List<Entity> results = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(maxComments)); 
     
     List<String> comments = new ArrayList<>();
-    for (Entity entity: results.asIterable()) {
-        String comment = (String) entity.getProperty(PROPERTY_CONTENT);
-        comments.add(comment);
+    for (Entity entity: results) {
+      String comment = (String) entity.getProperty(PROPERTY_CONTENT);
+      comments.add(comment);
     }
-    
+
     response.setContentType("application/json;");
     Gson gson = new Gson();
     String json = gson.toJson(comments);
@@ -68,6 +74,22 @@ public class DataServlet extends HttpServlet {
     datastore.put(commentEntity);
 
     response.sendRedirect("/index.html");
+  }
+
+  private Integer getMaxComments(HttpServletRequest request) {
+    String maxCommentsString = request.getParameter("max-comments");
+    int numMaxComments;
+    try {
+      numMaxComments = Integer.parseInt(maxCommentsString);
+    } catch (NumberFormatException e) {
+      System.err.println("Could not convert to int: " + maxCommentsString);
+      return null;
+    }
+    if (numMaxComments < 1) {
+      System.err.println("Player choice is out of range: " + maxCommentsString);
+      return null;
+    }
+    return numMaxComments;
   }
 }
 
