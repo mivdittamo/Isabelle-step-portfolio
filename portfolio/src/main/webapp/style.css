@@ -56,6 +56,14 @@ h1 {
   text-align: left;
 }
 
-#num-comments {
-    align-content: end;
+#num-comments-input {
+  text-align: right;
+}
+
+#num-comments-input label {
+  font-size: 15px;
+}
+
+#num-comments-input input[type=number] {
+  width: 50px;
 }
