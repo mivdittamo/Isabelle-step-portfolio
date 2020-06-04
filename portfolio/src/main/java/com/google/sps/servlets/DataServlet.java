@@ -40,7 +40,10 @@ public class DataServlet extends HttpServlet {
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    int maxComments = getMaxComments(request);
+    Integer maxComments = getMaxComments(request);
+    if (maxComments == null) {
+        maxComments = 0;
+    }
 
     Query query = new Query(ENTITY_COMMENT);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -73,18 +76,18 @@ public class DataServlet extends HttpServlet {
     response.sendRedirect("/index.html");
   }
 
-  private int getMaxComments(HttpServletRequest request) {
+  private Integer getMaxComments(HttpServletRequest request) {
     String maxCommentsString = request.getParameter("max-comments");
     int numMaxComments;
     try {
       numMaxComments = Integer.parseInt(maxCommentsString);
     } catch (NumberFormatException e) {
       System.err.println("Could not convert to int: " + maxCommentsString);
-      return -1;
+      return null;
     }
     if (numMaxComments < 1) {
       System.err.println("Player choice is out of range: " + maxCommentsString);
-      return -1;
+      return null;
     }
     return numMaxComments;
   }
