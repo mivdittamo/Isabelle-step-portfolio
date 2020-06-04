@@ -35,19 +35,19 @@ import com.google.appengine.api.datastore.FetchOptions;
 public class DataServlet extends HttpServlet {
 
   //constants for Datastore entity and property names
-  private final String COMMENT = "Comment";
-  private final String CONTENT = "content";
+  private static final String ENTITY_COMMENT = "Comment";
+  private static final String PROPERTY_CONTENT = "content";
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query(COMMENT);
+    Query query = new Query(ENTITY_COMMENT);
     int maxComments = getNumComments(request);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     List<Entity> results = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(maxComments)); 
     
     List<String> comments = new ArrayList<>();
     for (Entity entity: results) {
-      String comment = (String) entity.getProperty(CONTENT);
+      String comment = (String) entity.getProperty(PROPERTY_CONTENT);
       comments.add(comment);
     }
 
@@ -63,8 +63,8 @@ public class DataServlet extends HttpServlet {
     if (comment == null) {
       comment = "";
     }
-    Entity commentEntity = new Entity(COMMENT);
-    commentEntity.setProperty(CONTENT, comment);
+    Entity commentEntity = new Entity(ENTITY_COMMENT);
+    commentEntity.setProperty(PROPERTY_CONTENT, comment);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
