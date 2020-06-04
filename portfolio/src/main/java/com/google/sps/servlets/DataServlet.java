@@ -22,30 +22,52 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private List<String> messages;
-
-  @Override
-  public void init() {
-    messages = new ArrayList<>();
-  }
+  //constants for Datastore entity and property names
+  private static final String ENTITY_COMMENT = "Comment";
+  private static final String PROPERTY_CONTENT = "content";
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
+    Query query = new Query(ENTITY_COMMENT);
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
+    
+    List<String> comments = new ArrayList<>();
+    for (Entity entity: results.asIterable()) {
+        String comment = (String) entity.getProperty(PROPERTY_CONTENT);
+        comments.add(comment);
+    }
+    
+    response.setContentType("application/json;");
     Gson gson = new Gson();
-    String json = gson.toJson(messages);
+    String json = gson.toJson(comments);
     response.getWriter().println(json);
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String comment = request.getParameter("comments-input");
-    messages.add(comment);
+    if (comment == null) {
+      comment = "";
+    }
+    Entity commentEntity = new Entity(ENTITY_COMMENT);
+    commentEntity.setProperty(PROPERTY_CONTENT, comment);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
+
     response.sendRedirect("/index.html");
   }
 }
+
