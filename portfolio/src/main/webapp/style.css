@@ -47,13 +47,21 @@ h1 {
   border: solid 1px rgb(0, 0, 0);
 }
 
-#comments-container p{
+#comments-container li {
   border: solid 1px rgb(0, 0, 0);
+  list-style-type: none;
   margin: 0;
   padding-block-end: 10px;
   padding-block-start: 10px;
-  padding-left: 10px;  
+  padding-bottom: 20px;
+  padding-left: 10px;
+  padding-top: 0;
   text-align: left;
+}
+
+#comments-container h4 {
+  margin-bottom: 3px;
+  margin-top: 5px;
 }
 
 #num-comments-input {

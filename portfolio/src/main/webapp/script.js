@@ -47,23 +47,52 @@ function getComments() {
   var numComments = document.getElementById("num-comments").value;
   fetch('/data?max-comments='+numComments).then(response => response.json()).then((comments) => {
     const commentsContainer = document.getElementById('comments-container');
-    commentsContainer.innerHTML = '';
+    commentsContainer.innerText = '';
     if (comments.length == 0) {
       const iElement = document.createElement('i');
       iElement.innerText = "No comments to display";
       commentsContainer.appendChild(iElement);
     } else {
-      for (i = 0; i < comments.length; i++) {
-        commentsContainer.appendChild(createPElement(comments[i]));
-      }
+      comments.forEach((pair) => {
+        commentsContainer.appendChild(createCommentElement(pair));
+      });
     }
   });
+}
+
+function createCommentElement(pair) {
+  const name = createH4ItalicElement(pair.name);
+  const comment = createSpanElement(pair.comment);
+  console.log(name);
+  console.log(comment);
+
+  const commentElement = document.createElement('li');
+  commentElement.innerHTML = '';
+
+  commentElement.appendChild(name);
+  commentElement.appendChild(comment);
+  
+  return commentElement;
 }
 
 function createPElement(text) {
   const pElement = document.createElement('p');
   pElement.innerText = text;
   return pElement;
+}
+
+function createSpanElement(text) {
+  const spanElement = document.createElement('span');
+  spanElement.innerText = text;
+  return spanElement;
+}
+
+function createH4ItalicElement(text) {
+  const h4element = document.createElement('h4');
+  h4element.innerText = text;
+  const italicH4Element = document.createElement('i');
+  italicH4Element.appendChild(h4element);
+  return italicH4Element;
 }
 
 function deleteComments() {
