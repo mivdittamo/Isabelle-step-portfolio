@@ -26,7 +26,6 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Key;
 
-
 @WebServlet("/delete-data")
 public class DeletingDataServlet extends HttpServlet {
 
