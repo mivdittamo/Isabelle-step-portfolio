@@ -75,12 +75,6 @@ function createCommentElement(pair) {
   return commentElement;
 }
 
-function createPElement(text) {
-  const pElement = document.createElement('p');
-  pElement.innerText = text;
-  return pElement;
-}
-
 function createSpanElement(text) {
   const spanElement = document.createElement('span');
   spanElement.innerText = text;
