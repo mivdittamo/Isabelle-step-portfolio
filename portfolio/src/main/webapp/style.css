@@ -75,3 +75,8 @@ h1 {
 #num-comments-input input[type=number] {
   width: 50px;
 }
+
+textarea {
+  height: 150px;
+  width: 300px;
+}
