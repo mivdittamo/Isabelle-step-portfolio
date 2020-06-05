@@ -65,3 +65,10 @@ function createPElement(text) {
   pElement.innerText = text;
   return pElement;
 }
+
+function deleteComments() {
+  const request = new Request('/delete-data', {method: 'POST'});
+  fetch(request).then(response => {
+    getComments();
+  });
+}
