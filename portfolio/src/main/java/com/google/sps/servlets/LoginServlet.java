@@ -23,7 +23,7 @@ public class LoginServlet extends HttpServlet{
       String redirectURLAfterLogOut = "/";
       String logoutURL = userService.createLogoutURL(redirectURLAfterLogOut);
 
-      UserLogin loginInfo = new UserLogin("true", logoutURL);
+      UserLogin loginInfo = new UserLogin(true, logoutURL);
       String json = convertToJson(loginInfo);
 
       response.getWriter().println(json);
@@ -31,7 +31,7 @@ public class LoginServlet extends HttpServlet{
       String redirectURLAfterLogIn = "/";
       String loginURL = userService.createLoginURL(redirectURLAfterLogIn);
 
-      UserLogin loginInfo = new UserLogin("false", loginURL);
+      UserLogin loginInfo = new UserLogin(false, loginURL);
       String json = convertToJson(loginInfo);
 
       response.getWriter().println(json);

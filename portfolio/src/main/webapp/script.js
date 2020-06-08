@@ -50,7 +50,7 @@ function loadHomePageContent() {
 function fetchUserLoginStatus() {
   const commentsFormMessageContainer = document.getElementById("comments-form-message");
   fetch('/login').then(response => response.json()).then((result) => {
-    if (result.status == "true") {
+    if (result.status) {
       commentsFormMessageContainer.innerText = '';
       commentsFormMessageContainer.appendChild(createSpanElement("Click "));
       commentsFormMessageContainer.appendChild(createAElement("here", result.redirectURL));
