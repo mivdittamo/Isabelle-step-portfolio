@@ -29,7 +29,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.FetchOptions;
-import com.google.sps.data.NameCommentPair;
+import com.google.sps.data.Comment;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
@@ -52,12 +52,12 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     List<Entity> results = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(maxComments)); 
     
-    List<NameCommentPair> comments = new ArrayList<>();
+    List<Comment> comments = new ArrayList<>();
     for (Entity entity: results) {
       String name = (String) entity.getProperty(PROPERTY_COMMENT_NAME);
       String comment = (String) entity.getProperty(PROPERTY_CONTENT);
-      NameCommentPair pair = new NameCommentPair(name, comment);
-      comments.add(pair);
+      Comment commentEntity = new Comment(name, comment);
+      comments.add(commentEntity);
     }
 
     response.setContentType("application/json;");

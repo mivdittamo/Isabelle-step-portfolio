@@ -60,17 +60,17 @@ function getComments() {
   });
 }
 
-function createCommentElement(pair) {
-  const name = createH4ItalicElement(pair.name);
-  const comment = createSpanElement(pair.comment);
+function createCommentElement(commentEntity) {
+  const name = createH4ItalicElement(commentEntity.NAME);
+  const content = createSpanElement(commentEntity.COMMENT_CONTENT);
   console.log(name);
-  console.log(comment);
+  console.log(content);
 
   const commentElement = document.createElement('li');
   commentElement.innerHTML = '';
 
   commentElement.appendChild(name);
-  commentElement.appendChild(comment);
+  commentElement.appendChild(content);
   
   return commentElement;
 }
