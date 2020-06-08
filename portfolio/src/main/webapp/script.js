@@ -53,16 +53,16 @@ function getComments() {
       iElement.innerText = "No comments to display";
       commentsContainer.appendChild(iElement);
     } else {
-      comments.forEach((pair) => {
-        commentsContainer.appendChild(createCommentElement(pair));
+      comments.forEach((comment) => {
+        commentsContainer.appendChild(createCommentElement(comment));
       });
     }
   });
 }
 
 function createCommentElement(commentEntity) {
-  const name = createH4Element(commentEntity.NAME);
-  const content = createSpanElement(commentEntity.COMMENT_CONTENT);
+  const name = createH4Element(commentEntity.name);
+  const content = createSpanElement(commentEntity.content);
   console.log(name);
   console.log(content);
 
