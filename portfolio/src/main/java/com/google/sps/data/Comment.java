@@ -1,7 +1,6 @@
 package com.google.sps.data;
 /**
  * Comment class that represents the Comment entity stored in datastore
- *
 */
 public class Comment {
   private final String NAME;
