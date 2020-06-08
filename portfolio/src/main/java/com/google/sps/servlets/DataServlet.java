@@ -44,9 +44,6 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Integer maxComments = getMaxComments(request);
-    if (maxComments == null) {
-      maxComments = 0;
-    }
 
     Query query = new Query(ENTITY_COMMENT).addSort(PROPERTY_COMMENT_TIMESTAMP, SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -55,7 +52,7 @@ public class DataServlet extends HttpServlet {
     List<Comment> comments = new ArrayList<>();
     for (Entity entity: results) {
       String name = (String) entity.getProperty(PROPERTY_COMMENT_NAME);
-      String comment = (String) entity.getProperty(PROPERTY_CONTENT);
+      String comment = (String) entity.getProperty(PROPERTY_COMMENT_CONTENT);
       Comment commentEntity = new Comment(name, comment);
       comments.add(commentEntity);
     }
@@ -76,8 +73,8 @@ public class DataServlet extends HttpServlet {
 
     long timestamp = System.currentTimeMillis();
     Entity commentEntity = new Entity(ENTITY_COMMENT);
-    commentEntity.setProperty(PROPERTY_CONTENT, comment);
-    commentEntity.setProperty(PROPERTY_TIMESTAMP, timestamp);
+    commentEntity.setProperty(PROPERTY_COMMENT_CONTENT, comment);
+    commentEntity.setProperty(PROPERTY_COMMENT_TIMESTAMP, timestamp);
     commentEntity.setProperty(PROPERTY_COMMENT_NAME, commentAuthor);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -93,11 +90,11 @@ public class DataServlet extends HttpServlet {
       numMaxComments = Integer.parseInt(maxCommentsString);
     } catch (NumberFormatException e) {
       System.err.println("Could not convert to int: " + maxCommentsString);
-      return null;
+      return 0;
     }
     if (numMaxComments < 1) {
       System.err.println("Player choice is out of range: " + maxCommentsString);
-      return null;
+      return 0;
     }
     return numMaxComments;
   }
