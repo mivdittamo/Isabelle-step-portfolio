@@ -60,6 +60,7 @@ h1 {
 }
 
 #comments-container h4 {
+  font-style: italic;
   margin-bottom: 3px;
   margin-top: 5px;
 }

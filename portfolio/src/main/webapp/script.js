@@ -61,7 +61,7 @@ function getComments() {
 }
 
 function createCommentElement(commentEntity) {
-  const name = createH4ItalicElement(commentEntity.NAME);
+  const name = createH4Element(commentEntity.NAME);
   const content = createSpanElement(commentEntity.COMMENT_CONTENT);
   console.log(name);
   console.log(content);
@@ -81,12 +81,10 @@ function createSpanElement(text) {
   return spanElement;
 }
 
-function createH4ItalicElement(text) {
+function createH4Element(text) {
   const h4element = document.createElement('h4');
   h4element.innerText = text;
-  const italicH4Element = document.createElement('i');
-  italicH4Element.appendChild(h4element);
-  return italicH4Element;
+  return h4element;
 }
 
 function deleteComments() {
