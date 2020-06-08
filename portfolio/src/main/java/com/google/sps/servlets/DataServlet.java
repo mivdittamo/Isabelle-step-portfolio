@@ -29,6 +29,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.FetchOptions;
+import com.google.sps.data.Comment;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
@@ -36,23 +37,24 @@ public class DataServlet extends HttpServlet {
 
   //constants for Datastore entity and property names
   private static final String ENTITY_COMMENT = "Comment";
-  private static final String PROPERTY_CONTENT = "content";
+  private static final String PROPERTY_COMMENT_CONTENT = "content";
+  private static final String PROPERTY_COMMENT_TIMESTAMP = "timestamp";
+  private static final String PROPERTY_COMMENT_NAME = "name";
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Integer maxComments = getMaxComments(request);
-    if (maxComments == null) {
-        maxComments = 0;
-    }
 
-    Query query = new Query(ENTITY_COMMENT);
+    Query query = new Query(ENTITY_COMMENT).addSort(PROPERTY_COMMENT_TIMESTAMP, SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     List<Entity> results = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(maxComments)); 
     
-    List<String> comments = new ArrayList<>();
+    List<Comment> comments = new ArrayList<>();
     for (Entity entity: results) {
-      String comment = (String) entity.getProperty(PROPERTY_CONTENT);
-      comments.add(comment);
+      String name = (String) entity.getProperty(PROPERTY_COMMENT_NAME);
+      String comment = (String) entity.getProperty(PROPERTY_COMMENT_CONTENT);
+      Comment commentEntity = new Comment(name, comment);
+      comments.add(commentEntity);
     }
 
     response.setContentType("application/json;");
@@ -67,8 +69,13 @@ public class DataServlet extends HttpServlet {
     if (comment == null) {
       comment = "";
     }
+    String commentAuthor = request.getParameter("name-input");
+
+    long timestamp = System.currentTimeMillis();
     Entity commentEntity = new Entity(ENTITY_COMMENT);
-    commentEntity.setProperty(PROPERTY_CONTENT, comment);
+    commentEntity.setProperty(PROPERTY_COMMENT_CONTENT, comment);
+    commentEntity.setProperty(PROPERTY_COMMENT_TIMESTAMP, timestamp);
+    commentEntity.setProperty(PROPERTY_COMMENT_NAME, commentAuthor);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
@@ -83,11 +90,11 @@ public class DataServlet extends HttpServlet {
       numMaxComments = Integer.parseInt(maxCommentsString);
     } catch (NumberFormatException e) {
       System.err.println("Could not convert to int: " + maxCommentsString);
-      return null;
+      return 0;
     }
     if (numMaxComments < 1) {
       System.err.println("Player choice is out of range: " + maxCommentsString);
-      return null;
+      return 0;
     }
     return numMaxComments;
   }

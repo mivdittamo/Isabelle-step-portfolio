@@ -47,23 +47,44 @@ function getComments() {
   var numComments = document.getElementById("num-comments").value;
   fetch('/data?max-comments='+numComments).then(response => response.json()).then((comments) => {
     const commentsContainer = document.getElementById('comments-container');
-    commentsContainer.innerHTML = '';
+    commentsContainer.innerText = '';
     if (comments.length == 0) {
       const iElement = document.createElement('i');
       iElement.innerText = "No comments to display";
       commentsContainer.appendChild(iElement);
     } else {
-      for (i = 0; i < comments.length; i++) {
-        commentsContainer.appendChild(createPElement(comments[i]));
-      }
+      comments.forEach((comment) => {
+        commentsContainer.appendChild(createCommentElement(comment));
+      });
     }
   });
 }
 
-function createPElement(text) {
-  const pElement = document.createElement('p');
-  pElement.innerText = text;
-  return pElement;
+function createCommentElement(commentEntity) {
+  const name = createH4Element(commentEntity.name);
+  const content = createSpanElement(commentEntity.content);
+  console.log(name);
+  console.log(content);
+
+  const commentElement = document.createElement('li');
+  commentElement.innerHTML = '';
+
+  commentElement.appendChild(name);
+  commentElement.appendChild(content);
+  
+  return commentElement;
+}
+
+function createSpanElement(text) {
+  const spanElement = document.createElement('span');
+  spanElement.innerText = text;
+  return spanElement;
+}
+
+function createH4Element(text) {
+  const h4element = document.createElement('h4');
+  h4element.innerText = text;
+  return h4element;
 }
 
 function deleteComments() {
