@@ -1,5 +1,7 @@
 package com.google.sps.data;
-
+/**
+* User Login class to hold fields relating to the user login process
+*/
 public class UserLogin {
   private final String status;
   private final String redirectURL;
