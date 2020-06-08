@@ -53,8 +53,8 @@ function getComments() {
       iElement.innerText = "No comments to display";
       commentsContainer.appendChild(iElement);
     } else {
-      comments.forEach((pair) => {
-        commentsContainer.appendChild(createCommentElement(pair));
+      comments.forEach((comment) => {
+        commentsContainer.appendChild(createCommentElement(comment));
       });
     }
   });
