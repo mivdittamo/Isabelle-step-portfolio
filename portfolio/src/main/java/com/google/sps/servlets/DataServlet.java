@@ -37,8 +37,8 @@ public class DataServlet extends HttpServlet {
 
   //constants for Datastore entity and property names
   private static final String ENTITY_COMMENT = "Comment";
-  private static final String PROPERTY_CONTENT = "content";
-  private static final String PROPERTY_TIMESTAMP = "timestamp";
+  private static final String PROPERTY_COMMENT_CONTENT = "content";
+  private static final String PROPERTY_COMMENT_TIMESTAMP = "timestamp";
   private static final String PROPERTY_COMMENT_NAME = "name";
   
   @Override
@@ -48,7 +48,7 @@ public class DataServlet extends HttpServlet {
       maxComments = 0;
     }
 
-    Query query = new Query(ENTITY_COMMENT).addSort("timestamp", SortDirection.DESCENDING);
+    Query query = new Query(ENTITY_COMMENT).addSort(PROPERTY_COMMENT_TIMESTAMP, SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     List<Entity> results = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(maxComments)); 
     
