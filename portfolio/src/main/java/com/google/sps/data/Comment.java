@@ -3,19 +3,19 @@ package com.google.sps.data;
  * Comment class that represents the Comment entity stored in datastore
 */
 public class Comment {
-  private final String NAME;
-  private final String COMMENT_CONTENT;
+  private final String name;
+  private final String content;
 
   public Comment(String name, String comment) {
-    this.NAME = name;
-    this.COMMENT_CONTENT = comment;
+    this.name = name;
+    this.content = comment;
   }
 
-  public String getNAME() {
-    return this.NAME;
+  public String getName() {
+    return this.name;
   }
   
-  public String getCOMMENT_CONTENT() {
-    return this.COMMENT_CONTENT;
+  public String getContent() {
+    return this.content;
   }
 }
