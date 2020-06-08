@@ -42,6 +42,28 @@ function addToDOM(textResponse) {
   textContainer.innerText = textResponse;
 }
 
+function loadHomePageContent() {
+  fetchUserLoginStatus();
+  getComments();
+}
+
+function fetchUserLoginStatus() {
+  const commentsFormMessageContainer = document.getElementById("comments-form-message");
+  fetch('/login').then(response => response.json()).then((result) => {
+    if (result.status == "true") {
+      commentsFormMessageContainer.innerText = '';
+      commentsFormMessageContainer.appendChild(createSpanElement("Log out "));
+      commentsFormMessageContainer.appendChild(createAElement("here", result.redirectURL));
+      commentsFormMessageContainer.appendChild(createSpanElement(" to change accounts."));
+      document.getElementById("comments-form").style.display = "block";
+    } else {
+      commentsFormMessageContainer.appendChild(createSpanElement("Log in "));
+      commentsFormMessageContainer.appendChild(createAElement("here", result.redirectURL));
+      commentsFormMessageContainer.appendChild(createSpanElement(" to add your own comments."));
+      document.getElementById("comments-form").style.display = "none";
+    }
+  });
+}
 
 function getComments() {
   var numComments = document.getElementById("num-comments").value;
@@ -85,6 +107,15 @@ function createH4Element(text) {
   const h4element = document.createElement('h4');
   h4element.innerText = text;
   return h4element;
+}
+
+function createAElement(text, url) {
+  const aElement = document.createElement('a');
+  var textNode = document.createTextNode(text);
+  aElement.appendChild(textNode);
+  aElement.title = text;
+  aElement.href = url;
+  return aElement;
 }
 
 function deleteComments() {
