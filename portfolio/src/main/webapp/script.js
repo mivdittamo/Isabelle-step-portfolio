@@ -52,9 +52,9 @@ function fetchUserLoginStatus() {
   fetch('/login').then(response => response.json()).then((result) => {
     if (result.status == "true") {
       commentsFormMessageContainer.innerText = '';
-      commentsFormMessageContainer.appendChild(createSpanElement("Log out "));
+      commentsFormMessageContainer.appendChild(createSpanElement("Click "));
       commentsFormMessageContainer.appendChild(createAElement("here", result.redirectURL));
-      commentsFormMessageContainer.appendChild(createSpanElement(" to change accounts."));
+      commentsFormMessageContainer.appendChild(createSpanElement(" to log out."));
       document.getElementById("comments-form").style.display = "block";
     } else {
       commentsFormMessageContainer.appendChild(createSpanElement("Log in "));
