@@ -85,3 +85,8 @@ textarea {
 #comments-label h3 {
   padding-top: 20px;
 }
+
+#comments-form h4 {
+  display: inline;
+  padding-right: 10px;
+}

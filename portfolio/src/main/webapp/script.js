@@ -93,3 +93,13 @@ function deleteComments() {
     getComments();
   });
 }
+
+function fetchBlobstoreURL() {
+  fetch('/comment-image-uploads').then((response) => {
+    return response.text();
+  })
+  .then((imageUploadURL) => {
+    const commentsForm = document.getElementById("comments-form");
+    commentsForm.action = imageUploadURL;
+  })
+}
