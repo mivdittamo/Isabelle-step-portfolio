@@ -52,14 +52,14 @@ function fetchUserLoginStatus() {
   fetch('/login').then(response => response.json()).then((result) => {
     if (result.isLoggedIn) {
       commentsFormMessageContainer.innerText = '';
-      commentsFormMessageContainer.appendChild(createSpanElement("Click "));
+      commentsFormMessageContainer.appendChild(document.createTextNode("Click "));
       commentsFormMessageContainer.appendChild(createAElement("here", result.loginOrLogoutURL));
-      commentsFormMessageContainer.appendChild(createSpanElement(" to log out."));
+      commentsFormMessageContainer.appendChild(document.createTextNode(" to log out."));
       document.getElementById("comments-form").style.display = "block";
     } else {
-      commentsFormMessageContainer.appendChild(createSpanElement("Log in "));
+      commentsFormMessageContainer.appendChild(document.createTextNode("Log in "));
       commentsFormMessageContainer.appendChild(createAElement("here", result.loginOrLogoutURL));
-      commentsFormMessageContainer.appendChild(createSpanElement(" to add your own comments."));
+      commentsFormMessageContainer.appendChild(document.createTextNode(" to add your own comments."));
       document.getElementById("comments-form").style.display = "none";
     }
   });
@@ -111,8 +111,7 @@ function createH4Element(text) {
 
 function createAElement(text, url) {
   const aElement = document.createElement('a');
-  var textNode = document.createTextNode(text);
-  aElement.appendChild(textNode);
+  aElement.innerText = text;
   aElement.title = text;
   aElement.href = url;
   return aElement;
