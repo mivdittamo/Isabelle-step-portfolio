@@ -22,24 +22,20 @@ public class LoginServlet extends HttpServlet{
     response.setContentType("application/json");
 
     UserService userService = UserServiceFactory.getUserService();
+    UserLogin loginInfo;
     if (userService.isUserLoggedIn()) {
-      String userEmail = userService.getCurrentUser().getEmail();
       String redirectURLAfterLogOut = "/";
       String logoutURL = userService.createLogoutURL(redirectURLAfterLogOut);
 
-      UserLogin loginInfo = new UserLogin(true, logoutURL);
-      String json = convertToJson(loginInfo);
-
-      response.getWriter().println(json);
+      loginInfo = new UserLogin(true, logoutURL);
     } else {
       String redirectURLAfterLogIn = "/";
       String loginURL = userService.createLoginURL(redirectURLAfterLogIn);
 
-      UserLogin loginInfo = new UserLogin(false, loginURL);
-      String json = convertToJson(loginInfo);
-
-      response.getWriter().println(json);
+      loginInfo = new UserLogin(false, loginURL);
     }
+    String json = convertToJson(loginInfo);
+    response.getWriter().println(json);
   }
 
   public String convertToJson(UserLogin content) {
