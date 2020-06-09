@@ -50,15 +50,15 @@ function loadHomePageContent() {
 function fetchUserLoginStatus() {
   const commentsFormMessageContainer = document.getElementById("comments-form-message");
   fetch('/login').then(response => response.json()).then((result) => {
-    if (result.status) {
+    if (result.isLoggedIn) {
       commentsFormMessageContainer.innerText = '';
       commentsFormMessageContainer.appendChild(createSpanElement("Click "));
-      commentsFormMessageContainer.appendChild(createAElement("here", result.redirectURL));
+      commentsFormMessageContainer.appendChild(createAElement("here", result.loginOrLogoutURL));
       commentsFormMessageContainer.appendChild(createSpanElement(" to log out."));
       document.getElementById("comments-form").style.display = "block";
     } else {
       commentsFormMessageContainer.appendChild(createSpanElement("Log in "));
-      commentsFormMessageContainer.appendChild(createAElement("here", result.redirectURL));
+      commentsFormMessageContainer.appendChild(createAElement("here", result.loginOrLogoutURL));
       commentsFormMessageContainer.appendChild(createSpanElement(" to add your own comments."));
       document.getElementById("comments-form").style.display = "none";
     }
