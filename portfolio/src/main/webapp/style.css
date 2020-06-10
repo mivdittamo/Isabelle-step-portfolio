@@ -90,3 +90,8 @@ textarea {
   display: inline;
   padding-right: 10px;
 }
+
+#comments-form-message {
+  font-style: italic;
+  padding-top: 20px;
+}
