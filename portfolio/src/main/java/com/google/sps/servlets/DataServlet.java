@@ -54,6 +54,7 @@ public class DataServlet extends HttpServlet {
   private static final String PROPERTY_COMMENT_TIMESTAMP = "timestamp";
   private static final String PROPERTY_COMMENT_NAME = "name";
   private static final String PROPERTY_COMMENT_USER_EMAIL = "userEmail";
+  private static final String PROPERTY_COMMENT_IMAGE_URL = "imageURL"
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -98,7 +99,7 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty(PROPERTY_COMMENT_TIMESTAMP, timestamp);
     commentEntity.setProperty(PROPERTY_COMMENT_NAME, commentAuthor);
     commentEntity.setProperty(PROPERTY_COMMENT_USER_EMAIL, userEmail);
-    commentEntity.setProperty("commentsImage", imageUrl);
+    commentEntity.setProperty(PROPERTY_COMMENT_IMAGE_URL, imageUrl);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
