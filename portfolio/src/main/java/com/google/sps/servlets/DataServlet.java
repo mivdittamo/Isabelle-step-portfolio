@@ -89,7 +89,6 @@ public class DataServlet extends HttpServlet {
     String commentAuthor = request.getParameter("name-input");
 
     String imageUrl = getUploadedFileUrl(request, "image");
-    System.out.println("IMAGE URL: " + imageUrl);
 
     long timestamp = System.currentTimeMillis();
 
@@ -125,6 +124,7 @@ public class DataServlet extends HttpServlet {
     return numMaxComments;
   }
 
+  //method from source code
   private String getUploadedFileUrl(HttpServletRequest request, String formInputElementName) {
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
