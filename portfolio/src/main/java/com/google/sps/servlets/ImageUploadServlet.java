@@ -29,6 +29,9 @@ import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.ServingUrlOptions;
 
+/**
+* Servlet that handles requests to upload files using Blobstore
+*/
 @WebServlet("/comment-image-uploads")
 public class ImageUploadServlet extends HttpServlet{
 

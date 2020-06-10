@@ -65,6 +65,10 @@ h1 {
   margin-top: 5px;
 }
 
+#comments-container img {
+  display: block;
+}
+
 #num-comments-input {
   text-align: right;
 }

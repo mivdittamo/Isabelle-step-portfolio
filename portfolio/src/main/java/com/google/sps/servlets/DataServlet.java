@@ -54,7 +54,7 @@ public class DataServlet extends HttpServlet {
   private static final String PROPERTY_COMMENT_TIMESTAMP = "timestamp";
   private static final String PROPERTY_COMMENT_NAME = "name";
   private static final String PROPERTY_COMMENT_USER_EMAIL = "userEmail";
-  private static final String PROPERTY_COMMENT_IMAGE_URL = "imageURL"
+  private static final String PROPERTY_COMMENT_IMAGE_URL = "imageURL";
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -69,7 +69,8 @@ public class DataServlet extends HttpServlet {
       String name = (String) entity.getProperty(PROPERTY_COMMENT_NAME);
       String comment = (String) entity.getProperty(PROPERTY_COMMENT_CONTENT);
       String userEmail = (String) entity.getProperty(PROPERTY_COMMENT_USER_EMAIL);
-      Comment commentEntity = new Comment(name, comment, userEmail);
+      String imageURL = (String) entity.getProperty(PROPERTY_COMMENT_IMAGE_URL);
+      Comment commentEntity = new Comment(name, comment, userEmail, imageURL);
       comments.add(commentEntity);
     }
 
@@ -88,6 +89,7 @@ public class DataServlet extends HttpServlet {
     String commentAuthor = request.getParameter("name-input");
 
     String imageUrl = getUploadedFileUrl(request, "image");
+    System.out.println("IMAGE URL: " + imageUrl);
 
     long timestamp = System.currentTimeMillis();
 

@@ -45,6 +45,7 @@ function addToDOM(textResponse) {
 function loadHomePageContent() {
   fetchUserLoginStatus();
   getComments();
+  fetchBlobstoreURL();
 }
 
 function fetchUserLoginStatus() {
@@ -83,17 +84,20 @@ function getComments() {
 }
 
 function createCommentElement(commentEntity) {
-  const name = createH4Element(commentEntity.name);
-  const content = createSpanElement(commentEntity.content);
-  console.log(name);
-  console.log(content);
-
   const commentElement = document.createElement('li');
   commentElement.innerHTML = '';
 
+  const name = createH4Element(commentEntity.name);
   commentElement.appendChild(name);
+
+  const content = createSpanElement(commentEntity.content);
   commentElement.appendChild(content);
-  
+
+  if (typeof commentEntity.imageURL !== 'undefined') {
+    const imageURL = createImgElement(commentEntity.imageURL);
+    commentElement.appendChild(imageURL);
+  }
+
   return commentElement;
 }
 
@@ -115,6 +119,12 @@ function createAElement(text, url) {
   aElement.title = text;
   aElement.href = url;
   return aElement;
+}
+
+function createImgElement(imageURL) {
+  const imgElement = document.createElement('img');
+  imgElement.src = imageURL;
+  return imgElement;
 }
 
 function deleteComments() {

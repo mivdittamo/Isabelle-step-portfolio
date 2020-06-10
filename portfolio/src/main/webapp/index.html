@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body onload="loadHomePageContent()", "fetchBlobstoreURL()">
+  <body onload="loadHomePageContent()">
     <div id="content">
       <h1>Isabelle's Portfolio</h1>
       <p>
@@ -23,7 +23,7 @@
       <button onclick="addRandomGreeting()">Hello</button>
       <div id="greeting-container"></div>
       <div id="comments-form-message"></div>
-      <form action="/data" method="POST" id="comments-form">
+      <form method="POST" id="comments-form" enctype="multipart/form-data">
         <h3>Add Your Comments:</h3>
         <p><input type="text" name="name-input" placeholder="Enter Your Name" required/></p>
         <p><textarea name="comments-input" placeholder="Enter Your Comment"></textarea></p>
