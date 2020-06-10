@@ -85,3 +85,8 @@ textarea {
 #comments-label h3 {
   padding-top: 20px;
 }
+
+#comments-form-message {
+  font-style: italic;
+  padding-top: 20px;
+}

@@ -42,6 +42,28 @@ function addToDOM(textResponse) {
   textContainer.innerText = textResponse;
 }
 
+function loadHomePageContent() {
+  fetchUserLoginStatus();
+  getComments();
+}
+
+function fetchUserLoginStatus() {
+  const commentsFormMessageContainer = document.getElementById("comments-form-message");
+  fetch('/login').then(response => response.json()).then((result) => {
+    if (result.isLoggedIn) {
+      commentsFormMessageContainer.innerText = '';
+      commentsFormMessageContainer.appendChild(document.createTextNode("Click "));
+      commentsFormMessageContainer.appendChild(createAElement("here", result.loginOrLogoutURL));
+      commentsFormMessageContainer.appendChild(document.createTextNode(" to log out."));
+      document.getElementById("comments-form").style.display = "block";
+    } else {
+      commentsFormMessageContainer.appendChild(document.createTextNode("Log in "));
+      commentsFormMessageContainer.appendChild(createAElement("here", result.loginOrLogoutURL));
+      commentsFormMessageContainer.appendChild(document.createTextNode(" to add your own comments."));
+      document.getElementById("comments-form").style.display = "none";
+    }
+  });
+}
 
 function getComments() {
   var numComments = document.getElementById("num-comments").value;
@@ -85,6 +107,14 @@ function createH4Element(text) {
   const h4element = document.createElement('h4');
   h4element.innerText = text;
   return h4element;
+}
+
+function createAElement(text, url) {
+  const aElement = document.createElement('a');
+  aElement.innerText = text;
+  aElement.title = text;
+  aElement.href = url;
+  return aElement;
 }
 
 function deleteComments() {
