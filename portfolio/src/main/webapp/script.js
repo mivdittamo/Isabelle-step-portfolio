@@ -101,6 +101,25 @@ function createCommentElement(commentEntity) {
   return commentElement;
 }
 
+function deleteComments() {
+  const request = new Request('/delete-data', {method: 'POST'});
+  fetch(request).then(response => {
+    getComments();
+  });
+}
+
+function fetchBlobstoreURL() {
+  fetch('/comment-image-uploads').then((response) => {
+    return response.text();
+  })
+  .then((imageUploadURL) => {
+    const commentsForm = document.getElementById("comments-form");
+    commentsForm.action = imageUploadURL;
+  })
+}
+
+//Functions for creating individual html elements:
+
 function createSpanElement(text) {
   const spanElement = document.createElement('span');
   spanElement.innerText = text;
@@ -125,21 +144,4 @@ function createImgElement(imageURL) {
   const imgElement = document.createElement('img');
   imgElement.src = imageURL;
   return imgElement;
-}
-
-function deleteComments() {
-  const request = new Request('/delete-data', {method: 'POST'});
-  fetch(request).then(response => {
-    getComments();
-  });
-}
-
-function fetchBlobstoreURL() {
-  fetch('/comment-image-uploads').then((response) => {
-    return response.text();
-  })
-  .then((imageUploadURL) => {
-    const commentsForm = document.getElementById("comments-form");
-    commentsForm.action = imageUploadURL;
-  })
 }
