@@ -93,7 +93,7 @@ function createCommentElement(commentEntity) {
   const content = createSpanElement(commentEntity.content);
   commentElement.appendChild(content);
 
-  if (typeof commentEntity.imageURL !== 'undefined') {
+  if (commentEntity.imageURL) {
     const imageURL = createImgElement(commentEntity.imageURL);
     commentElement.appendChild(imageURL);
   }
