@@ -109,7 +109,7 @@ function deleteComments() {
 }
 
 function fetchBlobstoreURL() {
-  fetch('/comment-image-uploads').then((response) => {
+  fetch('/blobstore-url').then((response) => {
     return response.text();
   })
   .then((imageUploadURL) => {

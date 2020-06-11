@@ -30,10 +30,11 @@ import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.ServingUrlOptions;
 
 /**
-* Servlet that handles requests to upload files using Blobstore
+* Servlet that handles requests for a blobstore url for users to
+* upload files to.
 */
-@WebServlet("/comment-image-uploads")
-public class ImageUploadServlet extends HttpServlet{
+@WebServlet("/blobstore-url")
+public class BlobstoreURLServlet extends HttpServlet{
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
