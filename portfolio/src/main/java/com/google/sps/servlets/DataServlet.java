@@ -43,6 +43,7 @@ import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.ServingUrlOptions;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.appengine.api.utils.SystemProperty;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
@@ -88,7 +89,7 @@ public class DataServlet extends HttpServlet {
     }
     String commentAuthor = request.getParameter("name-input");
 
-    String imageUrl = getUploadedFileUrl(request, "image");
+    String imageUrl = getUploadedFileBlobKey(request, "image");
 
     long timestamp = System.currentTimeMillis();
 
@@ -124,8 +125,7 @@ public class DataServlet extends HttpServlet {
     return numMaxComments;
   }
 
-  //method from source code
-  private String getUploadedFileUrl(HttpServletRequest request, String formInputElementName) {
+  private String getUploadedFileBlobKey(HttpServletRequest request, String formInputElementName) {
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
     List<BlobKey> blobKeys = blobs.get(formInputElementName);
@@ -144,22 +144,7 @@ public class DataServlet extends HttpServlet {
       blobstoreService.delete(blobKey);
       return null;
     }
-
-    // We could check the validity of the file here, e.g. to make sure it's an image file
-    // https://stackoverflow.com/q/10779564/873165
-
-    // Use ImagesService to get a URL that points to the uploaded file.
-    ImagesService imagesService = ImagesServiceFactory.getImagesService();
-    ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
-
-    // To support running in Google Cloud Shell with AppEngine's dev server, we must use the relative
-    // path to the image, rather than the path returned by imagesService which contains a host.
-    try {
-      URL url = new URL(imagesService.getServingUrl(options));
-      return url.getPath();
-    } catch (MalformedURLException e) {
-      return imagesService.getServingUrl(options);
-    }
+    System.out.println("BLOB KEY: " + blobKey);
+    return blobKey.getKeyString();
   }
 }
-

@@ -92,10 +92,11 @@ function createCommentElement(commentEntity) {
 
   const content = createSpanElement(commentEntity.content);
   commentElement.appendChild(content);
-
+  
   if (commentEntity.imageURL) {
-    const imageURL = createImgElement(commentEntity.imageURL);
-    commentElement.appendChild(imageURL);
+    var blobURL = fetchBlob(commentElement.imageURL);
+    console.log(blobURL);
+    commentElement.appendChild(createImgElement(blobURL));
   }
 
   return commentElement;
@@ -117,6 +118,17 @@ function fetchBlobstoreURL() {
     commentsForm.action = imageUploadURL;
   })
 }
+
+function fetchBlob(blobKey) {
+  console.log(blobKey);
+  fetch('/blob-key?imageKey='+blobKey).then((blobResponse) => {
+    console.log(blobResponse);
+    return blobResponse.blob();
+  }).then((blobContent) => {
+    return URL.createObjectURL(blobContent);
+  });
+}
+
 
 //Functions for creating individual html elements:
 
