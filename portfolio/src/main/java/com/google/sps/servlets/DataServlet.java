@@ -15,8 +15,11 @@
 package com.google.sps.servlets;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,8 +33,17 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.sps.data.Comment;
+import com.google.appengine.api.blobstore.BlobInfo;
+import com.google.appengine.api.blobstore.BlobInfoFactory;
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.ServingUrlOptions;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.appengine.api.utils.SystemProperty;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
@@ -43,6 +55,7 @@ public class DataServlet extends HttpServlet {
   private static final String PROPERTY_COMMENT_TIMESTAMP = "timestamp";
   private static final String PROPERTY_COMMENT_NAME = "name";
   private static final String PROPERTY_COMMENT_USER_EMAIL = "userEmail";
+  private static final String PROPERTY_COMMENT_IMAGE_BLOBKEY = "imageBlobKey";
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -57,7 +70,8 @@ public class DataServlet extends HttpServlet {
       String name = (String) entity.getProperty(PROPERTY_COMMENT_NAME);
       String comment = (String) entity.getProperty(PROPERTY_COMMENT_CONTENT);
       String userEmail = (String) entity.getProperty(PROPERTY_COMMENT_USER_EMAIL);
-      Comment commentEntity = new Comment(name, comment, userEmail);
+      String imageBlobKey = (String) entity.getProperty(PROPERTY_COMMENT_IMAGE_BLOBKEY);
+      Comment commentEntity = new Comment(name, comment, userEmail, imageBlobKey);
       comments.add(commentEntity);
     }
 
@@ -75,6 +89,8 @@ public class DataServlet extends HttpServlet {
     }
     String commentAuthor = request.getParameter("name-input");
 
+    String imageBlobKey = getUploadedFileBlobKey(request, "image");
+
     long timestamp = System.currentTimeMillis();
 
     UserService userService = UserServiceFactory.getUserService();
@@ -85,6 +101,7 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty(PROPERTY_COMMENT_TIMESTAMP, timestamp);
     commentEntity.setProperty(PROPERTY_COMMENT_NAME, commentAuthor);
     commentEntity.setProperty(PROPERTY_COMMENT_USER_EMAIL, userEmail);
+    commentEntity.setProperty(PROPERTY_COMMENT_IMAGE_BLOBKEY, imageBlobKey);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
@@ -107,5 +124,27 @@ public class DataServlet extends HttpServlet {
     }
     return numMaxComments;
   }
-}
 
+  private String getUploadedFileBlobKey(HttpServletRequest request, String formInputElementName) {
+    BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+    Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
+    List<BlobKey> blobKeys = blobs.get(formInputElementName);
+
+    // User submitted form without selecting a file, so we can't get a URL. (dev server)
+    if (blobKeys == null || blobKeys.isEmpty()) {
+      return null;
+    }
+
+    // Our form only contains a single file input, so get the first index.
+    BlobKey blobKey = blobKeys.get(0);
+
+    // User submitted form without selecting a file, so we can't get a URL. (live server)
+    BlobInfo blobInfo = new BlobInfoFactory().loadBlobInfo(blobKey);
+    if (blobInfo.getSize() == 0) {
+      blobstoreService.delete(blobKey);
+      return null;
+    }
+    System.out.println("BLOB KEY: " + blobKey);
+    return blobKey.getKeyString();
+  }
+}

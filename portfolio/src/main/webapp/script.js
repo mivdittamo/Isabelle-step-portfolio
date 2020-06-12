@@ -45,6 +45,7 @@ function addToDOM(textResponse) {
 function loadHomePageContent() {
   fetchUserLoginStatus();
   getComments();
+  fetchBlobstoreURL();
 }
 
 function fetchUserLoginStatus() {
@@ -83,19 +84,47 @@ function getComments() {
 }
 
 function createCommentElement(commentEntity) {
-  const name = createH4Element(commentEntity.name);
-  const content = createSpanElement(commentEntity.content);
-  console.log(name);
-  console.log(content);
-
   const commentElement = document.createElement('li');
   commentElement.innerHTML = '';
 
+  const name = createH4Element(commentEntity.name);
   commentElement.appendChild(name);
+
+  const content = createSpanElement(commentEntity.content);
   commentElement.appendChild(content);
   
+  if (commentEntity.imageBlobKey) {
+    console.log(commentEntity.imageBlobKey);
+    fetch('/blob-key?imageKey='+commentEntity.imageBlobKey).then((response) => {
+      console.log(response);
+      return response.blob();
+    }).then((blobContent) => {
+      var blobURL = URL.createObjectURL(blobContent);
+      commentElement.appendChild(createImgElement(blobURL));
+    });
+  }
+
   return commentElement;
 }
+
+function deleteComments() {
+  const request = new Request('/delete-data', {method: 'POST'});
+  fetch(request).then(response => {
+    getComments();
+  });
+}
+
+function fetchBlobstoreURL() {
+  fetch('/blobstore-url').then((response) => {
+    return response.text();
+  })
+  .then((imageUploadURL) => {
+    const commentsForm = document.getElementById("comments-form");
+    commentsForm.action = imageUploadURL;
+  })
+}
+
+//Functions for creating individual html elements:
 
 function createSpanElement(text) {
   const spanElement = document.createElement('span');
@@ -117,9 +146,8 @@ function createAElement(text, url) {
   return aElement;
 }
 
-function deleteComments() {
-  const request = new Request('/delete-data', {method: 'POST'});
-  fetch(request).then(response => {
-    getComments();
-  });
+function createImgElement(imageURL) {
+  const imgElement = document.createElement('img');
+  imgElement.src = imageURL;
+  return imgElement;
 }
