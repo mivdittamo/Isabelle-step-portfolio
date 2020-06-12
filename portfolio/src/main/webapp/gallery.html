@@ -8,36 +8,38 @@
   </head>
   <body>
     <div id="content">
-      <h1>Gallery</h1>
-    </div>
-    <div id="sidebar">
-      <a href="index.html">Home</a>
-      <a href="aboutMe.html">About Me</a>
-      <a href="gallery.html">Gallery</a>
-    </div>
-    <div class="slideshow">
-      <div class="europeSlideshow">
-        <div class="picCaption">On top of a castle in Ireland</div>
-        <img src="images/slideshowPictures/irelandCastleSQ.JPG" style="width:100%">
+      <div id="main-content">
+        <h1>Gallery</h1>
+        <div class="slideshow">
+          <div class="europeSlideshow">
+            <div class="picCaption">On top of a castle in Ireland</div>
+            <img src="images/slideshowPictures/irelandCastleSQ.JPG" style="width:100%">
+          </div>
+          <div class="europeSlideshow">
+            <div class="picCaption">Out in the gardens of a castle in Scotland</div>
+            <img src="images/slideshowPictures/scotlandCastleSQ.JPG" style="width:100%">
+          </div>
+          <div class="europeSlideshow">
+            <div class="picCaption">Gretna Green in Scotland</div>
+            <img src="images/slideshowPictures/gretnaGreenSQ.JPG" style="width:100%">
+          </div>
+          <div class="europeSlideshow">
+            <div class="picCaption">Out in front of Buckingham Palace</div>
+            <img src="images/slideshowPictures/buckinghamPalaceSQ.JPG" style="width:100%">
+          </div>
+          <div class="europeSlideshow">
+            <div class="picCaption">Out in Spain</div>
+            <img src="images/slideshowPictures/spainJumpingSQ.JPG" style="width:100%">
+          </div>
+          <a class="left-button" onclick="moveSlide(-1);displaySlide();">&#10094;</a>
+          <a class="right-button" onclick="moveSlide(1);displaySlide();">&#10095;</a>
+        </div>
       </div>
-      <div class="europeSlideshow">
-        <div class="picCaption">Out in the gardens of a castle in Scotland</div>
-        <img src="images/slideshowPictures/scotlandCastleSQ.JPG" style="width:100%">
+      <div id="sidebar">
+        <a href="index.html">Home</a>
+        <a href="aboutMe.html">About Me</a>
+        <a href="gallery.html">Gallery</a>
       </div>
-      <div class="europeSlideshow">
-        <div class="picCaption">Gretna Green in Scotland</div>
-        <img src="images/slideshowPictures/gretnaGreenSQ.JPG" style="width:100%">
-      </div>
-      <div class="europeSlideshow">
-        <div class="picCaption">Out in front of Buckingham Palace</div>
-        <img src="images/slideshowPictures/buckinghamPalaceSQ.JPG" style="width:100%">
-      </div>
-      <div class="europeSlideshow">
-        <div class="picCaption">Out in Spain</div>
-        <img src="images/slideshowPictures/spainJumpingSQ.JPG" style="width:100%">
-      </div>
-      <a class="left-button" onclick="moveSlide(-1);displaySlide();">&#10094;</a>
-      <a class="right-button" onclick="moveSlide(1);displaySlide();">&#10095;</a>
     </div>
     <script src="galleryScript.js"></script>
   </body>

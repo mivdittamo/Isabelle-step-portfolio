@@ -8,43 +8,45 @@
   </head>
   <body onload="loadHomePageContent()">
     <div id="content">
-      <h1>Isabelle's Portfolio</h1>
-      <p>
-        I'm Isabelle, and I'm a rising 3rd year student majoring in Computer Science at the
-        Georgia Institute of Technology! Currently, I am interning at Google as a STEP Intern!
-        <br>This is my portfolio!
-      </p>
-      <img src="images/centennialParkPic.jpg" width="500"/>
-      <p>
-        Find me on <a href="https://www.linkedin.com/in/maria-isabelle-dittamo-4b6175192/">LinkedIn</a>
-        and <a href="https://github.com/mivdittamo">GitHub</a>!
-      </p>
-      <p>Click here to get a random quote:</p>
-      <button onclick="addRandomQuote()">Hello</button>
-      <div id="quote-container"></div>
-      <div id="comments-form-message"></div>
-      <form method="POST" id="comments-form" enctype="multipart/form-data">
-        <h3>Add Your Comments:</h3>
-        <p><input type="text" id="name-input" name="name-input" placeholder="Enter Your Name" required/></p>
-        <p><textarea id="comments-input" name="comments-input" placeholder="Enter Your Comment"></textarea></p>
-        <h4>Upload an image:</h4>
-        <span><input type="file" name="image"></span>
-        <p><input type="submit" /></p>
-      </form>
-      <div id="comments-label">
-        <h3><u>Comments:</u></h3>
+      <div id="main-content">
+        <h1>Isabelle's Portfolio</h1>
+        <p>
+          I'm Isabelle, and I'm a rising 3rd year student majoring in Computer Science at the
+          Georgia Institute of Technology! Currently, I am interning at Google as a STEP Intern!
+          <br>This is my portfolio!
+        </p>
+        <img src="images/centennialParkPic.jpg" width="500"/>
+        <p>
+          Find me on <a href="https://www.linkedin.com/in/maria-isabelle-dittamo-4b6175192/">LinkedIn</a>
+          and <a href="https://github.com/mivdittamo">GitHub</a>!
+        </p>
+        <p>Click here to get a random quote:</p>
+        <button onclick="addRandomQuote()">Hello</button>
+        <div id="quote-container"></div>
+        <div id="comments-form-message"></div>
+        <form method="POST" id="comments-form" enctype="multipart/form-data">
+          <h3>Add Your Comments:</h3>
+          <p><input type="text" id="name-input" name="name-input" placeholder="Enter Your Name" required/></p>
+          <p><textarea id="comments-input" name="comments-input" placeholder="Enter Your Comment"></textarea></p>
+          <h4>Upload an image:</h4>
+          <span><input type="file" name="image"></span>
+          <p><input type="submit" /></p>
+        </form>
+        <div id="comments-label">
+          <h3><u>Comments:</u></h3>
+        </div>
+        <div id="num-comments-input">
+          <label><b>Max Number of Comments:</b></label>
+          <input type="number" id="num-comments" onchange="getComments()" value="5" min="1">
+        </div>
+        <div id="comments-container"></div>
+        <button onclick="deleteComments()">Delete All Comments</button>
       </div>
-      <div id="num-comments-input">
-        <label><b>Max Number of Comments:</b></label>
-        <input type="number" id="num-comments" onchange="getComments()" value="5" min="1">
+      <div id="sidebar">
+        <a href="index.html">Home</a>
+        <a href="aboutMe.html">About Me</a>
+        <a href="gallery.html">Gallery</a>
       </div>
-      <div id="comments-container"></div>
-      <button onclick="deleteComments()">Delete All Comments</button>
-    </div>
-    <div id="sidebar">
-      <a href="index.html">Home</a>
-      <a href="aboutMe.html">About Me</a>
-      <a href="gallery.html">Gallery</a>
     </div>
   </body>
 </html>
