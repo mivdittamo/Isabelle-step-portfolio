@@ -94,9 +94,14 @@ function createCommentElement(commentEntity) {
   commentElement.appendChild(content);
   
   if (commentEntity.imageURL) {
-    var blobURL = fetchBlob(commentElement.imageURL);
-    console.log(blobURL);
-    commentElement.appendChild(createImgElement(blobURL));
+    console.log(commentEntity.imageURL);
+    fetch('/blob-key?imageKey='+commentEntity.imageURL).then((response) => {
+      console.log(response);
+      return response.blob();
+    }).then((blobContent) => {
+      var blobURL = URL.createObjectURL(blobContent);
+      commentElement.appendChild(createImgElement(blobURL));
+    });
   }
 
   return commentElement;
@@ -118,17 +123,6 @@ function fetchBlobstoreURL() {
     commentsForm.action = imageUploadURL;
   })
 }
-
-function fetchBlob(blobKey) {
-  console.log(blobKey);
-  fetch('/blob-key?imageKey='+blobKey).then((blobResponse) => {
-    console.log(blobResponse);
-    return blobResponse.blob();
-  }).then((blobContent) => {
-    return URL.createObjectURL(blobContent);
-  });
-}
-
 
 //Functions for creating individual html elements:
 
