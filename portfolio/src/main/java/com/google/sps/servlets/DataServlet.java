@@ -55,7 +55,7 @@ public class DataServlet extends HttpServlet {
   private static final String PROPERTY_COMMENT_TIMESTAMP = "timestamp";
   private static final String PROPERTY_COMMENT_NAME = "name";
   private static final String PROPERTY_COMMENT_USER_EMAIL = "userEmail";
-  private static final String PROPERTY_COMMENT_IMAGE_URL = "imageURL";
+  private static final String PROPERTY_COMMENT_IMAGE_BLOBKEY = "imageBlobKey";
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -70,8 +70,8 @@ public class DataServlet extends HttpServlet {
       String name = (String) entity.getProperty(PROPERTY_COMMENT_NAME);
       String comment = (String) entity.getProperty(PROPERTY_COMMENT_CONTENT);
       String userEmail = (String) entity.getProperty(PROPERTY_COMMENT_USER_EMAIL);
-      String imageURL = (String) entity.getProperty(PROPERTY_COMMENT_IMAGE_URL);
-      Comment commentEntity = new Comment(name, comment, userEmail, imageURL);
+      String imageBlobKey = (String) entity.getProperty(PROPERTY_COMMENT_IMAGE_BLOBKEY);
+      Comment commentEntity = new Comment(name, comment, userEmail, imageBlobKey);
       comments.add(commentEntity);
     }
 
@@ -89,7 +89,7 @@ public class DataServlet extends HttpServlet {
     }
     String commentAuthor = request.getParameter("name-input");
 
-    String imageUrl = getUploadedFileBlobKey(request, "image");
+    String imageBlobKey = getUploadedFileBlobKey(request, "image");
 
     long timestamp = System.currentTimeMillis();
 
@@ -101,7 +101,7 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty(PROPERTY_COMMENT_TIMESTAMP, timestamp);
     commentEntity.setProperty(PROPERTY_COMMENT_NAME, commentAuthor);
     commentEntity.setProperty(PROPERTY_COMMENT_USER_EMAIL, userEmail);
-    commentEntity.setProperty(PROPERTY_COMMENT_IMAGE_URL, imageUrl);
+    commentEntity.setProperty(PROPERTY_COMMENT_IMAGE_BLOBKEY, imageBlobKey);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);

@@ -93,9 +93,9 @@ function createCommentElement(commentEntity) {
   const content = createSpanElement(commentEntity.content);
   commentElement.appendChild(content);
   
-  if (commentEntity.imageURL) {
-    console.log(commentEntity.imageURL);
-    fetch('/blob-key?imageKey='+commentEntity.imageURL).then((response) => {
+  if (commentEntity.imageBlobKey) {
+    console.log(commentEntity.imageBlobKey);
+    fetch('/blob-key?imageKey='+commentEntity.imageBlobKey).then((response) => {
       console.log(response);
       return response.blob();
     }).then((blobContent) => {
