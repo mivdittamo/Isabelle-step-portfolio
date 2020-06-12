@@ -67,6 +67,8 @@ h1 {
 
 #comments-container img {
   display: block;
+  max-width: 600px;
+  height: auto;
 }
 
 #num-comments-input {
