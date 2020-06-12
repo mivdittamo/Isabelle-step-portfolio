@@ -10,7 +10,8 @@ body {
   width: 650px;
 }
 
-#greeting-container {
+#quote-container {
+  font-style: italic;
   margin-top: 20px;
 }
 
