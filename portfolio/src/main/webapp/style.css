@@ -101,3 +101,13 @@ textarea {
   font-style: italic;
   padding-top: 20px;
 }
+
+#comments-input {
+  border-radius: 10px;
+  padding: 5px;
+}
+
+#name-input {
+  border-radius: 10px;
+  padding: 5px;
+}
