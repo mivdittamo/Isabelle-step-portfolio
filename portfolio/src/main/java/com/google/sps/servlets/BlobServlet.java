@@ -14,6 +14,8 @@ import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 */
 @WebServlet("/blob-key")
 public class BlobServlet extends HttpServlet{
+  
+  @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     System.out.println(request.getParameter("imageKey"));
