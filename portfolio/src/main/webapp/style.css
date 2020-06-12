@@ -46,6 +46,7 @@ h1 {
 }
 
 #comments-container {
+  background-color: rgb(255, 228, 233);
   border: solid 1px rgb(0, 0, 0);
 }
 
@@ -105,11 +106,13 @@ textarea {
 }
 
 #comments-input {
+  background-color: rgb(255, 228, 233);
   border-radius: 10px;
   padding: 5px;
 }
 
 #name-input {
+  background-color: rgb(255, 228, 233);
   border-radius: 10px;
   padding: 5px;
 }
