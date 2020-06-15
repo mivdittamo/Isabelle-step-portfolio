@@ -15,16 +15,28 @@
 /**
  * Adds a random greeting to the page.
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!', 'Winter is coming!'];
+function addRandomQuote() {
+  const quotes =
+      ['Winter is coming',
+      'Avengers, assemble',
+      'Bears. Beets. Battlestar Galactica.',
+      '"You Miss 100% Of The Shots You Don\'t Take. -Wayne Gretzky" -Michael Scott',
+      'Ah numbers... the letters of math',
+      'You know nothing, Jon Snow',
+      'Road Work Ahead? Uh YEA! I sure hope it does!',
+      'Hi, Welcome to Chili\'s',
+      'As you wish',
+      'Helluva Computer Scientist',
+      'Merry Chrysler',
+      'Can I get a waffle? Can I PLEASE get a waffle?!',
+      'Look at all those CHICKENS'];
 
   // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  const quote = quotes[Math.floor(Math.random() * quotes.length)];
 
   // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  const quoteContainer = document.getElementById('quote-container');
+  quoteContainer.innerText = quote;
 }
 
 function getIntroduction() {

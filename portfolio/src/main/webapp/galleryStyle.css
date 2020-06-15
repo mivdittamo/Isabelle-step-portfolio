@@ -34,6 +34,10 @@ img {
   width: auto;
 }
 
+.left-button {
+  left: 0;
+}
+
 .right-button {
   border-radius: 3px 0 0 3px;
   right: 0;
