@@ -52,56 +52,16 @@ public final class FindMeetingQuery {
       return Arrays.asList(TimeRange.WHOLE_DAY);
     }
 
-    List<TimeRange> conflictsList = new ArrayList<>(conflictsSet);
-    Collections.sort(conflictsList, TimeRange.ORDER_BY_START);
-
     //Find valid meeting times in the day by going through found conflicts
-    for (TimeRange conflict: conflictsList) {
-      if (conflict.overlaps(possibleRange)) {
-        if (possibleRange.start() < conflict.start()) {
-          TimeRange availableTime = TimeRange.fromStartEnd(possibleRange.start(), conflict.start(), false);
-          if (availableTime.duration() >= request.getDuration()) {
-            availableMeetingTimes.add(availableTime);
-          }
-        }
-        possibleRange = TimeRange.fromStartEnd(conflict.end(), TimeRange.END_OF_DAY, true);
-      }
-    }
-    
-    //check if the possible range that was left is a valid time to add
-    if (possibleRange.duration() >= request.getDuration() && !possibleRange.equals(TimeRange.WHOLE_DAY)) {
-      availableMeetingTimes.add(possibleRange);
-    }
+    availableMeetingTimes = findAvailabilityFromConflicts(conflictsSet, request);
 
     //Same process as above but combined with optional attendees
     if (request.getOptionalAttendees().size() > 0) {
-      possibleRange = TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY, true);
-
       Collection<TimeRange> allConflictsSet = new HashSet<>();
       allConflictsSet.addAll(conflictsSet);
       allConflictsSet.addAll(optAttendeesConflictsSet);
-      List<TimeRange> allConflictsList = new ArrayList<>(allConflictsSet);
-      Collections.sort(allConflictsList, TimeRange.ORDER_BY_START);
 
-      Collection<TimeRange> allAvailableMeetingTimes = new HashSet<>();
-
-      //Find valid meeting times in the day by going through found conflicts
-      for (TimeRange conflict: allConflictsList) {
-        if (conflict.overlaps(possibleRange)) {
-          if (possibleRange.start() < conflict.start()) {
-            TimeRange availableTime = TimeRange.fromStartEnd(possibleRange.start(), conflict.start(), false);
-            if (availableTime.duration() >= request.getDuration()) {
-              allAvailableMeetingTimes.add(availableTime);
-            }
-          }
-          possibleRange = TimeRange.fromStartEnd(conflict.end(), TimeRange.END_OF_DAY, true);
-        }
-      }
-
-      //check if the possible range that was left is a valid time to add
-      if (possibleRange.duration() >= request.getDuration() && !possibleRange.equals(TimeRange.WHOLE_DAY)) {
-        allAvailableMeetingTimes.add(possibleRange);
-      }
+      Collection<TimeRange> allAvailableMeetingTimes = findAvailabilityFromConflicts(allConflictsSet, request);
 
       if (allAvailableMeetingTimes.size() > 0) {
         availableMeetingTimes = allAvailableMeetingTimes;
@@ -112,5 +72,34 @@ public final class FindMeetingQuery {
     Collections.sort(meetingsAsList, TimeRange.ORDER_BY_START);
 
     return meetingsAsList;
+  }
+
+  private Collection<TimeRange> findAvailabilityFromConflicts(Collection<TimeRange> conflicts, MeetingRequest request) {
+    Collection<TimeRange> availability = new HashSet<>();
+ 
+    TimeRange possibleRange = TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY, true);
+
+    List<TimeRange> conflictsList = new ArrayList<>(conflicts);
+    Collections.sort(conflictsList, TimeRange.ORDER_BY_START);
+
+    //Find valid meeting times in the day by going through found conflicts
+    for (TimeRange conflict: conflictsList) {
+      if (conflict.overlaps(possibleRange)) {
+        if (possibleRange.start() < conflict.start()) {
+          TimeRange availableTime = TimeRange.fromStartEnd(possibleRange.start(), conflict.start(), false);
+          if (availableTime.duration() >= request.getDuration()) {
+            availability.add(availableTime);
+          }
+        }
+        possibleRange = TimeRange.fromStartEnd(conflict.end(), TimeRange.END_OF_DAY, true);
+      }
+    }
+    
+    //check if the possible range that was left is a valid time to add
+    if (possibleRange.duration() >= request.getDuration() && !possibleRange.equals(TimeRange.WHOLE_DAY)) {
+      availability.add(possibleRange);
+    }
+
+    return availability;
   }
 }
